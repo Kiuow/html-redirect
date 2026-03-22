@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>快捷跳转导航</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            color: #212529;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px 0;
+        }
+
+        .jump-card {
+            background: #ffffff;
+            padding: 2rem;
+            width: 95%;
+            max-width: 500px;
+            border-radius: 28px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Watch7 适配 */
+        @media (max-width: 330px) {
+            body { background-color: #ffffff; padding: 0; }
+            .jump-card { box-shadow: none; border: none; padding: 15% 5%; width: 100vw; border-radius: 0; min-height: 100vh; }
+            .category-title { font-size: 0.7rem !important; margin-top: 1rem !important; }
+            .quick-item { font-size: 0.7rem !important; padding: 4px 8px !important; }
+            h5 { font-size: 1rem !important; }
+        }
+
+        .top-go-zone, .search-zone {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .form-control, .form-select {
+            background-color: #f8f9fa !important;
+            border: 2px solid #edf0f2 !important;
+            border-radius: 12px !important;
+            text-align: center;
+        }
+
+        /* 搜索框行内组合样式 */
+        .search-input-group {
+            display: flex;
+            background: #f8f9fa;
+            border: 2px solid #edf0f2;
+            border-radius: 15px;
+            overflow: hidden;
+            align-items: center;
+            padding-left: 10px;
+        }
+        
+        .search-input-group i {
+            font-size: 1.1rem;
+            color: #666;
+            margin-right: 5px;
+        }
+
+        .search-input-group .form-select {
+            border: none !important;
+            background: transparent !important;
+            width: auto;
+            max-width: 100px;
+            padding-right: 25px;
+            font-size: 0.85rem;
+            margin-bottom: 0 !important;
+        }
+
+        .search-input-group .form-control {
+            border: none !important;
+            background: transparent !important;
+            margin-bottom: 0 !important;
+            text-align: left;
+        }
+
+        .btn-search-inner {
+            border-radius: 0 12px 12px 0 !important;
+            border: none;
+        }
+
+        .btn-go-row { width: 100%; border-radius: 12px !important; font-weight: 700; margin-top: 10px; }
+
+        .category-title {
+            font-size: 0.8rem; font-weight: 700; color: #adb5bd; text-transform: uppercase;
+            margin-top: 1.2rem; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 8px;
+        }
+        .category-title::after { content: ""; flex: 1; height: 1px; background: #f1f1f1; }
+
+        .quick-links { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-start; }
+
+        .quick-item {
+            display: inline-flex; align-items: center; gap: 6px; text-decoration: none; font-size: 0.85rem;
+            padding: 6px 14px; background: #f8f9fa; border-radius: 50px; color: #333; border: 1px solid #eee; transition: 0.2s;
+        }
+        .quick-item:hover { background: #eef4ff; border-color: #0d6efd; color: #0d6efd; }
+    </style>
+</head>
+<body>
+
+<div class="jump-card">
+    <h5 class="fw-bold mb-3 text-center">快捷跳转导航</h5>
+
+    <div class="top-go-zone">
+        <div class="d-flex justify-content-center gap-2 mb-2">
+            <input type="radio" class="btn-check" name="proto" id="https" value="https://" checked>
+            <label class="btn btn-outline-primary btn-sm rounded-pill px-3" for="https">HTTPS</label>
+            <input type="radio" class="btn-check" name="proto" id="http" value="http://">
+            <label class="btn btn-outline-primary btn-sm rounded-pill px-3" for="http">HTTP</label>
+        </div>
+        <input type="text" id="urlField" class="form-control" placeholder="输入域名跳转" inputmode="url">
+        <button class="btn btn-primary btn-go-row shadow-sm py-2" type="button" onclick="go()">GO</button>
+    </div>
+
+    <div class="search-zone">
+        <div class="search-input-group">
+            <i id="engineIcon" class="bi bi-google"></i>
+            <select class="form-select" id="searchEngine" onchange="updateIcon()">
+                <option value="https://www.bing.com/search?q=" data-icon="bi-search">Bing</option>
+                <option value="https://www.google.com/search?q=" data-icon="bi-google">Google</option>
+                <option value="https://duckduckgo.com/?q=" data-icon="bi-shield-check">DuckDuckGo</option>
+                <option value="https://yandex.com/search/?text=" data-icon="bi-compass">Yandex</option>
+            </select>
+            <input type="text" id="searchField" class="form-control" placeholder="搜索内容...">
+            <button class="btn btn-dark btn-search-inner px-3" type="button" onclick="search()">
+                <i class="bi bi-search text-white m-0"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="category-title">搜索引擎</div>
+    <div class="quick-links">
+        <a href="https://www.bing.com" class="quick-item"><i class="bi bi-search"></i>Bing</a>
+        <a href="https://www.google.com" class="quick-item"><i class="bi bi-google"></i>Google</a>
+        <a href="https://yandex.com" class="quick-item"><i class="bi bi-compass"></i>Yandex</a>
+        <a href="https://duckduckgo.com" class="quick-item"><i class="bi bi-shield-check"></i>DuckDuckGo</a>
+    </div>
+
+    <div class="category-title">视频与社交</div>
+    <div class="quick-links">
+        <a href="https://www.youtube.com" class="quick-item"><i class="bi bi-youtube text-danger"></i>YouTube</a>
+        <a href="https://www.tiktok.com" class="quick-item"><i class="bi bi-tiktok"></i>TikTok</a>
+        <a href="https://www.reddit.com" class="quick-item"><i class="bi bi-reddit" style="color:#ff4500"></i>Reddit</a>
+    </div>
+
+    <div class="category-title">人工智能</div>
+    <div class="quick-links">
+        <a href="https://chatgpt.com" class="quick-item"><i class="bi bi-robot"></i>ChatGPT</a>
+        <a href="https://grok.com" class="quick-item"><i class="bi bi-stars"></i>Grok</a>
+        <a href="https://chat.deepseek.com" class="quick-item"><i class="bi bi-cpu"></i>DeepSeek</a>
+    </div>
+
+    <div class="category-title">工具与云端</div>
+    <div class="quick-links">
+        <a href="https://zh.wikipedia.org" class="quick-item"><i class="bi bi-book"></i>Wikipedia</a>
+        <a href="https://github.com" class="quick-item"><i class="bi bi-github"></i>GitHub</a>
+        <a href="https://pan.simpfun.eu.org" class="quick-item"><i class="bi bi-cloud-check text-primary"></i>Skya Cloud</a>
+        <a href="https://tools.simpfun.eu.org" class="quick-item"><i class="bi bi-wrench-adjustable text-secondary"></i>Skya Tools</a>
+    </div>
+</div>
+
+<script>
+    // 更新左侧图标逻辑
+    function updateIcon() {
+        const select = document.getElementById('searchEngine');
+        const icon = document.getElementById('engineIcon');
+        const selectedOption = select.options[select.selectedIndex];
+        const iconClass = selectedOption.getAttribute('data-icon');
+        icon.className = 'bi ' + iconClass;
+    }
+
+    // 网址跳转逻辑
+    function go() {
+        const input = document.getElementById('urlField');
+        let val = input.value.trim();
+        if (!val) return;
+        const proto = document.querySelector('input[name="proto"]:checked').value;
+        window.location.href = proto + val.replace(/^(https?:\/\/)/i, "");
+    }
+    
+    // 搜索逻辑
+    function search() {
+        const query = document.getElementById('searchField').value.trim();
+        const engine = document.getElementById('searchEngine').value;
+        if (!query) return;
+        window.location.href = engine + encodeURIComponent(query);
+    }
+
+    // 回车监听
+    document.getElementById('urlField').addEventListener('keypress', (e) => { if (e.key === 'Enter') go(); });
+    document.getElementById('searchField').addEventListener('keypress', (e) => { if (e.key === 'Enter') search(); });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
