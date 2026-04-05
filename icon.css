@@ -1,0 +1,22 @@
+/* 自定义图标通用基础样式 */
+.custom-icon {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    vertical-align: -0.15em;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Epic Games 官方图标 (使用你提供的 ico 地址) */
+.icon-epic {
+    background-image: url("https://www.epicgames.com/favicon.ico");
+}
+
+/* Hexo / Skya Blog 官方图标 (使用你提供的 png 地址) */
+.icon-hexo {
+    background-image: url("https://blog.simpfun.eu.org/img/favicon.png");
+    /* 针对 Watch7 屏幕微调大小，防止视觉上比其他图标大 */
+    transform: scale(0.9);
+}
