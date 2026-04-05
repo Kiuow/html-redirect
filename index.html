@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>快捷跳转导航</title>
+    <title>导航跳转中心</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
@@ -62,11 +62,7 @@
             padding-left: 10px;
         }
         
-        .search-input-group i {
-            font-size: 1.1rem;
-            color: #666;
-            margin-right: 5px;
-        }
+        .search-input-group i { font-size: 1.1rem; color: #666; margin-right: 5px; }
 
         .search-input-group .form-select {
             border: none !important;
@@ -85,11 +81,7 @@
             text-align: left;
         }
 
-        .btn-search-inner {
-            border-radius: 0 12px 12px 0 !important;
-            border: none;
-        }
-
+        .btn-search-inner { border-radius: 0 12px 12px 0 !important; border: none; }
         .btn-go-row { width: 100%; border-radius: 12px !important; font-weight: 700; margin-top: 10px; }
 
         .category-title {
@@ -110,7 +102,7 @@
 <body>
 
 <div class="jump-card">
-    <h5 class="fw-bold mb-3 text-center">快捷跳转导航</h5>
+    <h5 class="fw-bold mb-3 text-center">快捷导航</h5>
 
     <div class="top-go-zone">
         <div class="d-flex justify-content-center gap-2 mb-2">
@@ -127,9 +119,9 @@
         <div class="search-input-group">
             <i id="engineIcon" class="bi bi-google"></i>
             <select class="form-select" id="searchEngine" onchange="updateIcon()">
-                <option value="https://www.bing.com/search?q=" data-icon="bi-search">Bing</option>
                 <option value="https://www.google.com/search?q=" data-icon="bi-google">Google</option>
-                <option value="https://duckduckgo.com/?q=" data-icon="bi-shield-check">DuckDuckGo</option>
+                <option value="https://www.bing.com/search?q=" data-icon="bi-search">Bing</option>
+                <option value="https://duckduckgo.com/?q=" data-icon="bi-shield-check">DDG</option>
                 <option value="https://yandex.com/search/?text=" data-icon="bi-compass">Yandex</option>
             </select>
             <input type="text" id="searchField" class="form-control" placeholder="搜索内容...">
@@ -141,10 +133,18 @@
 
     <div class="category-title">搜索引擎</div>
     <div class="quick-links">
-        <a href="https://www.bing.com" class="quick-item"><i class="bi bi-search"></i>Bing</a>
         <a href="https://www.google.com" class="quick-item"><i class="bi bi-google"></i>Google</a>
+        <a href="https://www.bing.com" class="quick-item"><i class="bi bi-search"></i>Bing</a>
         <a href="https://yandex.com" class="quick-item"><i class="bi bi-compass"></i>Yandex</a>
         <a href="https://duckduckgo.com" class="quick-item"><i class="bi bi-shield-check"></i>DuckDuckGo</a>
+    </div>
+
+    <div class="category-title">人工智能</div>
+    <div class="quick-links">
+        <a href="https://chatgpt.com" class="quick-item"><i class="bi bi-robot"></i>ChatGPT</a>
+        <a href="https://gemini.google.com" class="quick-item"><i class="bi bi-stars text-primary"></i>Gemini</a>
+        <a href="https://grok.com" class="quick-item"><i class="bi bi-lightning-charge"></i>Grok</a>
+        <a href="https://chat.deepseek.com" class="quick-item"><i class="bi bi-cpu"></i>DeepSeek</a>
     </div>
 
     <div class="category-title">视频与社交</div>
@@ -154,24 +154,23 @@
         <a href="https://www.reddit.com" class="quick-item"><i class="bi bi-reddit" style="color:#ff4500"></i>Reddit</a>
     </div>
 
-    <div class="category-title">人工智能</div>
+    <div class="category-title">游戏与购物</div>
     <div class="quick-links">
-        <a href="https://chatgpt.com" class="quick-item"><i class="bi bi-robot"></i>ChatGPT</a>
-        <a href="https://grok.com" class="quick-item"><i class="bi bi-stars"></i>Grok</a>
-        <a href="https://chat.deepseek.com" class="quick-item"><i class="bi bi-cpu"></i>DeepSeek</a>
+        <a href="https://store.steampowered.com" class="quick-item"><i class="bi bi-steam"></i>Steam</a>
+        <a href="https://www.epicgames.com" class="quick-item"><i class="bi bi-play-btn-fill"></i>Epic</a>
+        <a href="https://www.goofish.com/" class="quick-item"><i class="bi bi-tags-fill text-warning"></i>闲鱼</a>
     </div>
 
     <div class="category-title">工具与云端</div>
     <div class="quick-links">
         <a href="https://zh.wikipedia.org" class="quick-item"><i class="bi bi-book"></i>Wikipedia</a>
-        <a href="https://github.com" class="quick-item"><i class="bi bi-github"></i>GitHub</a>
         <a href="https://pan.simpfun.eu.org" class="quick-item"><i class="bi bi-cloud-check text-primary"></i>Skya Cloud</a>
         <a href="https://tools.simpfun.eu.org" class="quick-item"><i class="bi bi-wrench-adjustable text-secondary"></i>Skya Tools</a>
+        <a href="https://github.com" class="quick-item"><i class="bi bi-github"></i>GitHub</a>
     </div>
 </div>
 
 <script>
-    // 更新左侧图标逻辑
     function updateIcon() {
         const select = document.getElementById('searchEngine');
         const icon = document.getElementById('engineIcon');
@@ -180,7 +179,6 @@
         icon.className = 'bi ' + iconClass;
     }
 
-    // 网址跳转逻辑
     function go() {
         const input = document.getElementById('urlField');
         let val = input.value.trim();
@@ -189,7 +187,6 @@
         window.location.href = proto + val.replace(/^(https?:\/\/)/i, "");
     }
     
-    // 搜索逻辑
     function search() {
         const query = document.getElementById('searchField').value.trim();
         const engine = document.getElementById('searchEngine').value;
@@ -197,7 +194,6 @@
         window.location.href = engine + encodeURIComponent(query);
     }
 
-    // 回车监听
     document.getElementById('urlField').addEventListener('keypress', (e) => { if (e.key === 'Enter') go(); });
     document.getElementById('searchField').addEventListener('keypress', (e) => { if (e.key === 'Enter') search(); });
 </script>
